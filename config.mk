@@ -1,0 +1,2 @@
+AVRDUDE_PROGRAMMER = buspirate
+AVRDUDE_PORT = /dev/ttyUSB0
