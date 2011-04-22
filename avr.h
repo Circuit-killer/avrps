@@ -1,7 +1,9 @@
 #ifndef INCLUDED_avr_h
 #define INCLUDED_avr_h
 
-//#include <avr/cpufunc.h>
+#if 0
+#    include <avr/cpufunc.h>
+#endif
 
 #define ARRAY_SIZE(a) (sizeof (a) / sizeof (a)[0])
 
