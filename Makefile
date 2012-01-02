@@ -13,6 +13,7 @@ CFLAGS += -O$(OPT) \
     -Wall -Wstrict-prototypes \
     -Wa,-adhlns=$(<:.c=.lst)
 CFLAGS += -std=gnu99
+CFLAGS += -I../../include
 #CFLAGS += -mrelax # -8/2086 bytes code
 LDFLAGS = -Wl,-Map=$(TARGET).map,--cref
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
