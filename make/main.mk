@@ -1,7 +1,6 @@
 TARGET ?= main
 
-OPT = s
-FORMAT = ihex
+OPT = s  # GCC optimisations option
 SRC ?= $(TARGET).c
 CFLAGS =
 CFLAGS += -g
@@ -30,11 +29,16 @@ clean:
 program: $(TARGET).hex
 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH)
 
-.PHONY: all clean program
+fuses: $(TARGET).elf
+	$(OBJDUMP) -s -j .fuse $<
+	@echo Program with:
+	@echo $(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:w:0xNN:m
+
+.PHONY: all clean program fuses
 
 $(TARGET).hex: $(TARGET).elf
 	@echo OBJCOPY $@
-	$(OBJCOPY) -O $(FORMAT) $< $@
+	$(OBJCOPY) --remove-section=.fuse -O ihex $< $@
 
 $(TARGET).lss: $(TARGET).elf
 	@echo OBJDUMP $@
