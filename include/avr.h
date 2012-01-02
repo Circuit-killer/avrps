@@ -19,6 +19,12 @@ Including empty assembler text seems to avoid this. */
 #undef _MemoryBarrier
 #define _MemoryBarrier() asm volatile("" : : : "memory")
 
+#define DD_INPUT 0
+#define DD_OUTPUT 1
+#define PORT_TRISTATE 0
+#define PORT_PULLUP 1
+#define PIN_TOGGLE 1
+
 #define CKSEL_MASK 0x0F
 #define CKSEL_EXT 0x00
 #define CKSEL_4MHZ 0x02
