@@ -1,5 +1,7 @@
 TARGET ?= main
 
+-include $(BASE)/make/config.mk
+
 OPT = s  # GCC optimisations option
 SRC ?= $(TARGET).c
 CFLAGS =
@@ -9,6 +11,7 @@ CFLAGS += -O$(OPT) \
     -Wall -Wstrict-prototypes \
     -Wa,-adhlns=$(<:.c=.lst)
 CFLAGS += -std=gnu99
+CFLAGS += -I$(BASE)/include
 LDFLAGS = -Wl,-Map=$(TARGET).map,--cref
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 AVRDUDE_FLAGS = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER)
