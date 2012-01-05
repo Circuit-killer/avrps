@@ -8,8 +8,7 @@ CFLAGS =
 CFLAGS += -g
 CFLAGS += -O$(OPT) \
     -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums \
-    -Wall -Wstrict-prototypes \
-    -Wa,-adhlns=$(<:.c=.lst)
+    -Wall -Wstrict-prototypes
 CFLAGS += -std=gnu99
 CFLAGS += -I$(BASE)/include
 LDFLAGS = -Wl,-Map=$(TARGET).map,--cref
@@ -21,12 +20,13 @@ OBJDUMP = avr-objdump
 AVRDUDE ?= avrdude
 OBJ = $(SRC:.c=.o)
 LST = $(SRC:.c=.lst)
+DEPS = $(OBJ:.o=.d)
 ALL_CFLAGS = -mmcu=$(MCU) $(CFLAGS)
 
 all: $(TARGET).hex $(TARGET).lss
 
 clean:
-	rm -f $(TARGET).hex $(TARGET).elf $(OBJ) $(LST) $(TARGET).map
+	rm -f $(TARGET).hex $(TARGET).elf $(OBJ) $(LST) $(DEPS) $(TARGET).map
 	rm -f $(TARGET).lss
 
 program: $(TARGET).hex
@@ -51,6 +51,10 @@ $(TARGET).elf: $(OBJ)
 	@echo LD $@
 	$(CC) $(ALL_CFLAGS) $^ --output $@ $(LDFLAGS)
 
+$(LST): %.lst: %.o
+LISTING = -Wa,-adhlns=$(<:.c=.lst)
+AUTODEP = -MMD -MF $(@:.o=.d) -MP
 $(OBJ): %.o: %.c
 	@echo CC $<
-	$(CC) -c $(ALL_CFLAGS) $< -o $@
+	$(CC) -c $(ALL_CFLAGS) $< -o $@ $(LISTING) $(AUTODEP)
+-include $(DEPS)
