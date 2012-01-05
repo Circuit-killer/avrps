@@ -7,11 +7,19 @@
 
 #define ARRAY_SIZE(a) (sizeof (a) / sizeof (a)[0])
 
-#define REG_MOD(reg, mask, val) \
-    ( (reg) = ((reg) & ~(mask)) | ((val) & (mask)) )
+/* Potentially one less operation than naive version. Taken from
+https://graphics.stanford.edu/~seander/bithacks.html#MaskedMerge
+#define MASK_MERGE(zero, mask, one) ( ((zero) ^ (one)) & (mask) ^ (zero) )
+Alas! it does not optimise as well when constants are used. */
+
+#define MASK_MERGE(zero, mask, one) ( ((zero) & ~(mask)) | ((one) & (mask)) )
+#define BIT_MERGE(other, pos, val) \
+    MASK_MERGE(other, 1 << (pos), (val) << (pos))
+
+#define REG_MOD(reg, mask, val) ( (reg) = MASK_MERGE(reg, mask, val) )
 #define FIELD_MOD(reg, field, mask, val) \
     REG_MOD(reg, (mask) << (field), (val) << (field))
-#define BIT_MOD(reg, field, val) FIELD_MOD(reg, field, 1, val)
+#define BIT_MOD(reg, field, val) ( (reg) = BIT_MERGE(reg, field, val) )
 
 /* _MemoryBarrier provided by <avr/cpufunc.h> causes:
     error: expected string literal before ':' token
