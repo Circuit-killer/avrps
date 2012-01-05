@@ -18,7 +18,7 @@ AVRDUDE_FLAGS = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER)
 CC = avr-gcc
 OBJCOPY = avr-objcopy
 OBJDUMP = avr-objdump
-AVRDUDE = avrdude
+AVRDUDE ?= avrdude
 OBJ = $(SRC:.c=.o)
 LST = $(SRC:.c=.lst)
 ALL_CFLAGS = -mmcu=$(MCU) $(CFLAGS)
