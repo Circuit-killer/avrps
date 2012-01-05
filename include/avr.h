@@ -21,7 +21,7 @@ Including empty assembler text seems to avoid this. */
 
 #define DD_INPUT 0
 #define DD_OUTPUT 1
-#define PORT_TRISTATE 0
+#define PORT_FLOAT 0
 #define PORT_PULLUP 1
 #define PIN_TOGGLE 1
 
