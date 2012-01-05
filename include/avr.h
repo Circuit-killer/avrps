@@ -49,6 +49,30 @@ Including empty assembler text seems to avoid this. */
 #define WGM0_CTC 2 /* Clear timer on compare-match */
 #define WGM0_PWM_FAST 3
 
+#define PWM10 WGM10 /* PWM1 a.k.a. WGM1 field in TCCR1A */
+#define PWM1_MASK 3
+#define WGM1B_BIT WGM12 /* WGM1 field in TCCR1B */
+#define WGM1B_MASK 3
+#define PWM1_NORMAL_CTC 0
+#    define WGM1B_NORMAL 0 /* Free-running */
+#    define CTC1 WGM12
+#        define WGM13_OCRA 0
+#        define WGM13_ICR 1
+#define WGM13_PWM_FIXED 0
+#    define WGM12_FIXED_PC 0 /* Phase-correct */
+#    define WGM12_FIXED_FAST 1
+#    define PWM1_8BIT 1
+#    define PWM1_9BIT 2
+#    define PWM1_10BIT 3
+#define WGM13_PWM_VARIABLE 1
+#    define WGM12_VAR_CORRECTED 0
+#        define PWM11_PHASE_FREQ 0 /* Phase and frequency correct */
+#        define PWM11_PHASE 1 /* Phase-correct */
+#    define WGM12_VAR_FAST 1
+#        define PWM11_FAST 1
+#    define PWM10_ICR 0
+#    define PWM10_OCRA 1
+
 #define CS_MASK 7 /* Clock selections for timer-counters */
 #define CS_NONE 0 /* Stopped */
 #define CS_CLK 1 /* No prescaling */
