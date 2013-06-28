@@ -33,21 +33,46 @@ Including empty assembler text seems to avoid this. */
 #define PORT_PULLUP 1
 #define PIN_TOGGLE 1
 
-#define CKSEL_MASK 0x0F
-#define CKSEL_EXT 0x00
-#define CKSEL_4MHZ 0x02
-#define CKSEL_8MHZ 0x04
-#define CKSEL_128KHZ 0x06
+#define CKSEL_BIT 0
+#if defined(__AVR_ATtiny2313__)
+#    define CKSEL_MASK 0xF
+#elif defined(__AVR_ATtiny13__)
+#    define CKSEL_MASK 3
+#endif
+#define CKSEL_EXT 0
+#define CKSEL_HALF 2 /* 4 or 4.8 MHz */
+#define CKSEL_DEFAULT 4 /* 8 or 9.6 MHz */
+#define CKSEL_128KHZ 6
+
+#define SUT_BIT 2
+#define SUT_MASK 3
+#define SUT_ZERO 0
+#define SUT_4MS 1
+#define SUT_64MS 2
 
 #define COM_MASK 3 /* Compare output modes for timer-counters */
 #define COM_DISCON 0 /* Normal port operation, OC disconnected */
 #define COM_TOGGLE 1 /* Toggle OC on compare match */
+#define COM_CLEAR 2
+#define COM_SET 3
+#define COM_PWM_NONINV 2 /* Non-inverted PWM: OC set for TCNT < OCR */
+#define COM_PWM_INV 3 /* Inverted PWM: OC set for TCNT > OCR */
 
 #define WGM0_MASK 3 /* Waveform generation modes for Timer-counter 0 */
 #define WGM0_NORMAL 0 /* Free-running */
 #define WGM0_PWM_PC 1 /* Phase-correct PWM */
 #define WGM0_CTC 2 /* Clear timer on compare-match */
 #define WGM0_PWM_FAST 3
+
+#define WGM0A_BIT WGM00 /* WGM0 field within TCCR0A */
+#define WGM0A_MASK 3
+#define WGM02_NORMAL_CTC 0
+#    define WGM0A_NORMAL 0
+#    define WGM0A_CTC 2
+#define WGM02_PWM_FIXED 0
+#define WGM02_PWM_VARIABLE 1
+#    define WGM0A_PWM_PC 1 /* Phase-correct */
+#    define WGM0A_PWM_FAST 3
 
 #define PWM10 WGM10 /* PWM1 a.k.a. WGM1 field in TCCR1A */
 #define PWM1_MASK 3
@@ -91,5 +116,8 @@ Including empty assembler text seems to avoid this. */
 #define ACIS_TOGGLE 0
 #define ACIS_FALLING 2
 #define ACIS_RISING 3
+
+#define OC0A_BIT 0
+#define OC0B_BIT 1
 
 #endif
