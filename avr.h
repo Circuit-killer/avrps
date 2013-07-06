@@ -33,22 +33,24 @@ Including empty assembler text seems to avoid this. */
 #define PORT_PULLUP 1
 #define PIN_TOGGLE 1
 
-#define CKSEL_BIT 0
 #if defined(__AVR_ATtiny2313__)
-#    define CKSEL_MASK 0xF
+#    define CKSEL_MASK (~0x0F)
+#    define CKSEL_EXT (0x00 | CKSEL_MASK)
+#    define CKSEL_4MHZ (0x02 | CKSEL_MASK)
+#    define CKSEL_8MHZ (0x04 | CKSEL_MASK)
+#    define CKSEL_128KHZ (0x06 | CKSEL_MASK)
 #elif defined(__AVR_ATtiny13__)
-#    define CKSEL_MASK 3
-#endif
-#define CKSEL_EXT 0
-#define CKSEL_HALF 2 /* 4 or 4.8 MHz */
-#define CKSEL_DEFAULT 4 /* 8 or 9.6 MHz */
-#define CKSEL_128KHZ 6
+#    define CKSEL_MASK (~0x03)
+#    define CKSEL_EXT (0x00 | CKSEL_MASK)
+#    define CKSEL_4MHZ8 (0x01 | CKSEL_MASK)
+#    define CKSEL_9MHZ6 (0x02 | CKSEL_MASK)
+#    define CKSEL_128KHZ (0x03 | CKSEL_MASK)
 
-#define SUT_BIT 2
-#define SUT_MASK 3
-#define SUT_ZERO 0
-#define SUT_4MS 1
-#define SUT_64MS 2
+#    define SUT_MASK (~0x0C)
+#    define SUT_ZERO (0x00 | SUT_MASK)
+#    define SUT_4MS (0x04 | SUT_MASK)
+#    define SUT_64MS (0x08 | SUT_MASK)
+#endif
 
 #define COM_MASK 3 /* Compare output modes for timer-counters */
 #define COM_DISCON 0 /* Normal port operation, OC disconnected */
