@@ -119,7 +119,17 @@ Including empty assembler text seems to avoid this. */
 #define ACIS_FALLING 2
 #define ACIS_RISING 3
 
+#define MUX_MASK 3
+
 #define OC0A_BIT 0
 #define OC0B_BIT 1
+
+#define ADC0_BIT 5
+#define ADC1_BIT 2
+#define ADC2_BIT 4
+#define ADC3_BIT 3
+
+#define AIN0_BIT 0
+#define AIN1_BIT 1
 
 #endif
