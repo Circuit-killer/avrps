@@ -5,15 +5,15 @@
 #include <stdint.h>
 
 FUSES = {
-    .low = LFUSE_DEFAULT,
+    .low = MASK_MERGE(SUT_ZERO & CKSEL_9MHZ6 & FUSE_CKDIV8,
+        SUT_MASK & CKSEL_MASK & FUSE_CKDIV8, LFUSE_DEFAULT),
     .high = HFUSE_DEFAULT,
 };
+#define F_CPU (9600UL * 1000 / 8)
 
 static uint16_t c2 = 10000;
 
 int main(void) {
-#define F_CPU (9600UL * 1000 / 8)
-    
     /* Set waveform generation mode (WGM) to fast PWM, with TOP = OCR0A
     ("variable") */
     REG_MOD(TCCR0A, WGM0A_MASK << WGM0A_BIT | COM_MASK << COM0B0,
