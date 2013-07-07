@@ -121,6 +121,18 @@ Including empty assembler text seems to avoid this. */
 
 #define MUX_MASK 3
 
+#define WDP_MASK 0x27
+#define WDP_16MS 0x00
+#define WDP_32MS 0x01
+#define WDP_64MS 0x02
+#define WDP_0S125 0x03
+#define WDP_0S25 0x04
+#define WDP_0S5 0x05
+#define WDP_1S 0x06
+#define WDP_2S 0x07
+#define WDP_4S 0x20
+#define WDP_8S 0x21
+
 #define OC0A_BIT 0
 #define OC0B_BIT 1
 
