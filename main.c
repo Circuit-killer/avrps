@@ -69,7 +69,8 @@ ISR(WDT_vect) {
             mode = MODE_SHUTDOWN;
             break;
         case MODE_SHUTDOWN:
-            OCR0B = 5 - 1;
+            BIT_MOD(PORTB, OC0B_BIT, 0);
+            TCCR0A = COM_DISCON << COM0B0;
             mode = MODE_OFF;
             break;
         case MODE_OFF:
