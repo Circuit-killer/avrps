@@ -21,12 +21,6 @@ Alas! it does not optimise as well when constants are used. */
     REG_MOD(reg, (mask) << (field), (val) << (field))
 #define BIT_MOD(reg, field, val) ( (reg) = BIT_MERGE(reg, field, val) )
 
-/* _MemoryBarrier provided by <avr/cpufunc.h> causes:
-    error: expected string literal before ':' token
-Including empty assembler text seems to avoid this. */
-#undef _MemoryBarrier
-#define _MemoryBarrier() asm volatile("" : : : "memory")
-
 #define DD_INPUT 0
 #define DD_OUTPUT 1
 #define PORT_FLOAT 0
